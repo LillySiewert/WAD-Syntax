@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            display: flex;
+        }
+        #sidebar {
+            width: 20%;
+            background-color: #1e1e1e;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+        #sidebar h2 {
+            color: #ffffff;
+        }
+        #sidebar a {
+            color: #76c7c0;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+        #sidebar a:hover {
+            color: #ffffff;
+        }
+        #content {
+            padding: 20px;
+            width: 70%;
+            position: absolute;
+            right: 0;
+        }
+        h1, h2 {
+            color: #76c7c0;
+        }
+        pre {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h2>Contents</h2>
+        <a href="#integration">JS Integration</a>
+        <a href="#console">Console Logging</a>
+        <a href="#onload">Window Onload Function</a>
+        <a href="#variables">Variables</a>
+        <a href="#constants">Constants</a>
+        <a href="#data-types">Data Types</a>
+        <a href="#numbers">Numbers & Operations</a>
+        <a href="#operators">Comparison & Logical Operators</a>
+        <a href="#strings">Strings</a>
+        <a href="#arrays">Arrays</a>
+        <a href="#objects">Objects</a>
+        <a href="#conditionals">Conditionals & Switch</a>
+        <a href="#loops">Loops</a>
+        <a href="#functions">Functions</a>
+        <a href="#higherOrder">Higher Order Functions</a>
+        <a href="#regex">RegEx</a>
+        <a href="#dom">DOM</a>
+        <a href="#creatApp">Create & Append Elements</a>
+        <a href="#event">Event Handling</a>
+        <a href="#bom">BOM - Window Object</a>
+        <a href="#popup">Popup Boxes</a>
+        <a href="#timing">Timing Events</a>
+        <a href="#callback">Callback Hell</a>
+        <a href="#promise">Promises</a>
+        <a href="#ajax">AJAX</a>
+        <a href="fetchAPI">Fetch API</a>
+        <a href="json">JSON</a>
+        <p><br></p>
+    </div>
+
+    <div id="content">
+        <h1 id="integration">JS Integration</h1>
+        <p>Examples of integrating JavaScript in an HTML document:</p>
+        <pre>
+        External: &lt;script type="text/javascript" src="src/js/script.js"&gt;&lt;/script&gt;
+            - Bottom of &lt;body&gt;
+        OR
+            - In &lt;head&gt; with defer
+        Internal: &lt;script&gt; ... &lt;/script&gt;
+        </pre>
+        
+        <h1 id="console">Console Logging</h1>
+        <pre>
+            console.log("message")                                          //for testing
+            console.error("error")                                          //reports error line number
+            console.log(["error","message"])                                //array log in table
+            console.table({firstMessage:"error", secondMessage:"message"})  //object log in table
+        </pre>
+
+        <h1 id="onload">Window Onload Function</h1>
+        <pre>
+            window.onload = function() {
+                document.querySelector("h1").style.fontSize = '90px';
+            }
+        </pre>
+
+        <h1 id="variables">Declaring & Initializing Variables</h1>
+        <p>JavaScript allows dynamic typing, meaning you do not need to specify the type of a variable.</p>
+        <pre>
+            let name1;          // Declaring
+            name1 = "John";     // Initializing
+            let name2 = "John"; // Declaring and Initializing
+            name1 = "Paolo";    // Updating
+        </pre>
+
+        <h1 id="constants">Constants</h1>
+        <p>Constants must be declared and initialized, and their values cannot be changed.</p>
+        <pre>
+            const constantType = "Hello";
+        </pre>
+
+        <h1 id="data-types">Data Types</h1>
+        <p>Examples of various data types in JavaScript:</p>
+        <pre>
+            console.log(typeof 1000);                       // Number
+            console.log(typeof "WAD");                      // String
+            console.log(typeof {name: "Sarah", age: 17});   // Object
+            console.log(typeof [10, 15, 17]);               // Array (considered an Object)
+            console.log(typeof true);                       // Boolean
+            console.log(typeof function(){});               // Function
+            console.log(typeof null);                       // Null (considered an Object)
+            console.log(typeof undefined);                  // Undefined
+        </pre>
+
+        <h1 id="numbers">Numbers & Operations</h1>
+        <p>Examples of numbers and operations in JavaScript:</p>
+        <pre>
+            let a = 3.14;           // A number with decimals
+            let b = 3;              // A number without decimals
+            let c = 123e5;          // A extra large number, 12300000
+            let d = 123e-5;         // A extra small number, 0.00123
+
+            let x = 5, y = 6;
+            console.log(x + y);     // Addition
+            console.log(x - y);     // Subtraction
+            console.log(x * y);     // Multiplication
+            console.log(x / y);     // Division
+            console.log(x % y);     // Remainder
+            console.log(x ** y);    // Exponent
+        </pre>
+
+        <h1 id="operators">Comparison & Logical Operators</h1>
+        <pre>
+            x = 5;
+            console.log(x == 5);    // equal to, true
+            console.log(x == "5");  // true
+            console.log(x ===5);    // equal value & type, true
+            console.log(x === "5"); // false
+            console.log(x !=8);     // logical not, true
+            console.log(x !== "5"); // not equal value or not equal type, true
+            console.log(x < 5);     // false
+            console.log(x < 5);     // false
+            console.log(x >= 5);    // true
+            console.log(x >= 5);    // true
+
+            console.log(true && true);      // logical and, true
+            console.log(false && true);     // false
+            console.log(true && false);     // false
+            console.log(false && false);    // false
+            console.log(true || true);      // logial or, true
+            console.log(false || true);     // true
+            console.log(true || false);     // true
+            console.log(false || false);    // false
+            console.log(!true);             // logical not, false
+        </pre>
+
+        <h1 id="strings">Strings</h1>
+        <p>Examples of string methods and properties:</p>
+        <pre>
+            //const declaration and initialization
+            console.log("Web App. Development");
+            console.log('Web App. Development');
+            console.log(`Web App. “Development”`);
+
+            console.log('\"WAD\"');     // Escape character, “WAD”
+            console.log("New\n Line."); // \n newline
+
+            a = "Web Application";
+            console.log(a.length);                          // length of String, 15
+            console.log(a.slice(0,3));                      // substring(start, end), substr(start,length) --> Web
+            console.log(a.replace("Web Application","WAD")) // WAD
+
+            c = "WAD"
+            console.log(c.toLowerCase()); // wad
+            console.log(c.toUpperCase()); // WAD
+
+            b = "Development";
+            console.log(a.concat(" ", b));  // Web Appl. Development
+            console.log("WAD" +""+ "wad");  // WAD wad
+
+            d =  " trim " ;
+            console.log(d);             // trim
+            console.log(d.trim());      //trim
+            console.log(d.trimStart()); //trim
+            console.log(d.trimEnd());   // trim
+        </pre>
+
+        <h1 id="arrays">Arrays</h1>
+        <p>Examples of array methods:</p>
+        <pre>
+            let shopping =['bread','milk','eggs'];
+            let sequence = [1, 1, 2, 3, 5, 8, 13];
+            let random = ['tree', 795, [0, 1, 2]];
+
+            shopping<mark>[0]</mark>;                    // returns "bread"
+            shopping[0] = 'noodles';        // "noodles", "milk", "eggs"]
+            shopping.<mark>length</mark>;                // returns 3
+
+            let shopping=['bread','milk','cheese'];
+            shopping.<mark>push</mark>('eggs');                  // adds new element to end of array 
+                                                    // --> ['bread', 'milk', 'cheese', 'eggs']
+            shopping.<mark>pop</mark>();                         // remove element from the end of array 
+                                                    // --> ['bread', 'milk', 'cheese'] -> 'eggs'
+
+            shopping.<mark>unshift</mark>('eggs');               // adds new element to beginning of array 
+                                                    // --> ['eggs‘, 'bread', 'milk', 'cheese']
+
+            shopping=['bread','cheese','eggs'];
+            shopping.<mark>splice</mark>(1, 2, "apples");        // removes & adds elements 
+                                                    // array.splice(index, # of element to be removed, item1, item2, ... to be added)
+                                                    // --> [‘bread‘, 'apples']
+
+            shopping=["eggs","bread","cheese"];
+            shopping.<mark>sort</mark>();                        // ['bread', 'cheese', 'eggs']
+            shopping.<mark>reverse</mark>();                     // ['eggs', 'cheese', 'bread']
+            shopping=["eggs","bread","cheese"];
+            shopping.<mark>indexof</mark>("eggs");               // 0
+        </pre>
+
+        <h1 id="objects">Objects</h1>
+        <p>Examples of object properties and methods:</p>
+        <pre>
+            const person = {
+                name: ['Bob', 'Smith'],
+                age: 32,
+                gender: 'male',
+                interests: ['music', 'skiing'],
+                <mark>bio</mark>: function() {
+                    alert(this.name[0] + ' ' +
+                    this.name[1]);
+                }
+            };
+            
+            person<mark>.bio()</mark>;                   // alert with Bob Smith
+            console.log(person<mark>.age</mark>);        // 32
+            console.log(person<mark>["gender"]</mark>);  // male
+
+            person.age = 34;
+            console.log(person.age);        // 34
+            
+            let human = new Object({        // create an object
+                name: 'John',
+                age: 21,
+            });
+            human.gender = 'male';
+            
+            let newHuman1 = Object.create(human); // use an existing object as the prototype
+            let newHuman2 = Object.assign(human); // copies all enumerable own properties from one or more source objects            
+        </pre>
+
+        <h1 id="conditionals">Conditionals & Switch & Ternary</h1>
+        <p>Examples of conditionals and switches:</p>
+        <pre>
+            if(true){
+
+            } else if (false){
+            
+            } else {
+            
+            }
+            
+            switch(a){
+                <mark>case 0:</mark> /* ... */ <mark>break</mark>;
+                /* ... */
+                <mark>default:</mark> /* ... */ 
+            }
+            
+            authenticated <mark>?</mark> renderApp() <mark>:</mark> renderLogin();
+            // comparing it with the if statement
+            if (authenticated) { renderApp(); } else {renderLogin();}            
+        </pre>
+
+        <h1 id="loops">Loops</h1>
+        <p> - for <br>
+            - for/in --> through properties of object <br>
+            - for/of --> through values of iterable object <br>
+            - while <br>
+            - do/while</p>
+        <pre>
+            for(i=0; i<10; i++) {
+                console.log(i);
+                if (i == 9){
+                    break;
+                }
+                if (i == 7){
+                    continue;
+                }
+            }
+            
+            for(key in object){
+                /* ... */
+            }
+            
+            for(variable of iterable){
+                /* ... */
+            }
+            
+            while(i<10){
+                i++
+            }
+            
+            do {
+                i++
+            }
+            while(i<10);
+        </pre>
+
+        <h1 id="functions">Functions</h1>
+        <p>Examples of functions in JavaScript:</p>
+        <pre>
+            // <mark>default value</mark> can be set if no value / undefined is passed
+            function sayMyName(name =<mark>'No name was passed'</mark>){ 
+                return name
+            }
+        </pre>
+        <p>Anonymous Functions:</p>
+        <pre>
+            let sayMyName = function(name) {
+                return name;
+            }
+            
+            sayMyName("John");            
+        </pre>
+        <p>Arrow Functions:</p>
+        <pre>
+            let funArrow = (fName, lName) => {
+                return `My name is ${fName} ${lName}`;
+            }
+            
+            funArrow("John", "Arrow");
+        </pre>
+        <p>Callback Functions:</p>
+        <pre>
+            let calledFun = ()=> {
+                console.log('Hello');
+            }
+            
+            function syncCallBck(string, callback) {
+                callback();
+                console.log(string);
+            }
+            
+            syncCallBck('World', calledFun)
+                // Hello
+                // World
+        </pre>
+        <p>Object Constructor Function:</p>
+        <pre>
+            function Person(first, last, age, salary){
+                this.name = {first : first, last : last};
+                this.age = age;
+                this.salary = salary;
+            }
+            
+            const bob = new Person('Bob','Smith', 32, 2300);
+            console.log(bob);
+            console.log(bob.bio());
+        </pre>
+
+        <h1 id="higherOrder">Higher Order Functions</h1>
+        <pre>
+            let numArr = [1, 2, 3, 4, 5];
+
+            console.log(numArr.<mark>map</mark>((a) => a + 1));                  // array.map(function(currentValue, index, arr), thisValue)
+                                                                    // --> [2, 3, 4, 5, 6]
+             
+            console.log(numArr.<mark>filter</mark>((a) => a % 2 === 0));         // array.filter(function(currentValue, index, arr), thisValue)
+                                                                    // --> [2, 4]
+
+            console.log(numArr.<mark>reduce</mark>((acc, cur) => acc + cur));    // array.reduce(function(accumulator, currentValue), initialValue)
+                                                                    // --> 15
+
+            arrforEach = numArr.<mark>forEach</mark>((a) => console.log(a));     // --> 1 2 3 4 5  // array.forEach(function(currentValue, index, arr), thisValue)
+            console.log(arrforEach);                                // undefined
+        </pre>
+
+        <h1 id="regex">Regular Expressions</h1>
+        <p>- (X|Y) any of the alternatives separated with "|", X, Or Y <br>
+            - [0-9] any number from 0 to 9 <br>
+            - [^0-9] any character that is not 0 To 9 <br>
+            - [a-z] any lowercase character from a to z <br>
+            - [^a-z] any character that is not a lowercase character from A to Z <br>
+            - [A-Z] any uppercase character from a to z <br>
+            - [^A-Z] any character that is not an uppercase character from A to Z <br>
+            - [abc] Find any of the characters between the brackets <br>
+            - [^abc] Find any characters that is not between the brackets <br>
+            - . matches any character, except newline or line terminators. <br>
+            - \w matches word characters. [a-z, A-Z, 0-9, and Underscore] <br>
+            - \W matches Non word characters <br>
+            - \d matches digits from 0 to 9. <br>
+            - \D matches non-digit characters. <br>
+            - \s matches whitespace character. <br>
+            - \S matches non whitespace character. <br>
+            - \b matches at the beginning or end of a word. <br>
+            - \B matches NOT at the beginning/end of a word. <br>
+            - n+ any string that contains at least one n <br>
+            - n* any string that contains zero or more occurrences of n <br>
+            - n? any string that contains zero or one occurrences of n <br>
+            - n{x} a string containing x numbers of n <br>
+            - n{x,y} a string containing a range from x to y numbers of n <br>
+            - n{x,} a string containing at least x numbers of n <br>
+            - ^ a string starting with something <br>
+            - $ a string ending with something <br>
+            - ?= a string followed by some “string” <br>
+            - ?! a string not followed by some “string” <br>
+            - ^ a string starting with something <br>
+            - $ a string ending with something <br>
+            - ?= a string followed by some “string” <br>
+            - ?! a string not followed by some “string”</p>
+        <pre>
+            let str2 = "Web2022App";
+            let str3 = "Web 2022 App";
+
+            let regex2 = /[beW][0-2]0[0-2][0-2][A-Z][a-z][a-z]/;
+            console.log(regex2.test(str2));                         // true
+
+            let regex3 = /.\w\w\s\d\d\d\d\s[A-Z][a-z]\S/;
+            console.log(regex3.test(str3));                         // true
+
+            let regex4 = /\bWeb\s\d\d\d\d\s\bApp/;
+            console.log(regex4.test(str3));                         // true
+            
+            let regex5 = /\w+\s\d+\s\w+/;
+            console.log(regex5.test(str3));                         // true
+
+            let regex6 = /\w{3}\s\d{4}\s\w{3}/;
+            console.log(regex6.test(str3));                         // true
+
+            let regex7 = /^Web\s\d{4}\s\w{2}p$/;
+            console.log(regex7.test(str3));                         // true
+
+            let regex8 = /^Web\s\d{4}\s\w{2}(?=p)/;
+            console.log(regex8.test(str3));                         // true
+
+            let regex9 = /^Web\s\d{4}\s\w{2}p$/;
+            console.log(regex9.test(str3));                         // true
+
+            let regex10 = /^Web\s\d{4}\s\w{2}(?=p)/;
+            console.log(regex10.test(str3));                        // true
+        </pre>
+
+        <h1 id="dom">DOM Methods & Properties</h1>
+        <pre>
+            let element = document.getElementById("demo");
+            element.innerText = "Hello World";
+        </pre>
+        <p>Locating DOM Elements</p>
+        <pre>
+            let idEle = document.getElementById("span1");                   // by id
+            let tagEles = document.getElementsByTagName("p");               // by tag name
+            let classEles =document.getElementsByClassName(“class1");       // by class name
+            let cssEle = document.querySelector(".class1");                 // by class selector
+            let cssEleName = document.querySelector('p[name]');             // by specific attribute
+            let cssEleNameVal = document.querySelector('p[name="para2"]');  // by specific attribute value
+        </pre>
+        <p>Accessing Element's Attributes</p>
+        <pre>
+            html: 
+                &lt;p id="p2" class="class2"&gt;
+                    ...
+                    &lt;span id="span1"&gt; ... &lt;/span&gt;
+                &lt;/p&gt;
+
+            js: 
+                let idEleP = document.getElementById("p2");
+                console.log(idEleP.textContent);            // This is a Paragraph This is a Span within a Paragraph
+                console.log(idEleP.innerHTML);              // ... &lt;span id="span1"&gt; ... &lt;/span&gt;
+                console.log(idEleP.id);                     // p2
+                console.log(idEleP.<mark>className</mark>);              // class2
+                console.log(idEleP.<mark>getAttribute("class")</mark>);  // class2 - getAttribute will return the value of the specified attribute
+                console.log(idEleP.attributes);             // returns NamedNodeMap{} of all attributes
+                console.log(idEleP.hasAttributes());        // true
+                console.log(idEleP.<mark>hasAttribute</mark>("class"));  // true
+        </pre>
+        <p>Modifying Element's Attributes</p>
+        <pre>
+            html: 
+                &lt;p id="p2" class="class2"&gt;
+                    ...
+                    &lt;span id="span1"&gt; ... &lt;/span&gt;
+                &lt;/p&gt;
+
+            js: 
+                let idEleP = document.getElementById("p2");
+                console.log(idEleP.className="class3");         // change an attribute directly --> class3
+                idEleP.setAttribute("class", "class4");         // change an attribute through the setAttribute method 
+                console.log(idEleP.className);                  // class4
+        </pre>
+        <p>Element's Class List</p>
+        <pre>
+            html: 
+                &lt;p id="p2" class="class2"&gt;
+                    ...
+                    &lt;span id="span1"&gt; ... &lt;/span&gt;
+                &lt;/p&gt;
+
+            js: 
+                let idEleP = document.getElementById("p2");
+                console.log(idEleP.classList.<mark>contains</mark>("show"))  // return true or false depending on whether the element has the class
+                                                                // --> false
+                console.log(idEleP.classList.item("0"));        // return the class on the specified index
+                                                                // --> class2
+                idEleP.classList.<mark>toggle</mark>("show")                 // toggle the existence of the class
+        </pre>
+        <p>Set / Remove Element's CSS Property</p>
+        <pre>
+            html: 
+                &lt;p id="p2" class="class2"&gt;
+                    ...
+                    &lt;span id="span1"&gt; ... &lt;/span&gt;
+                &lt;/p&gt;
+
+            js: 
+                let idEleP = document.getElementById("p2");
+                
+                idEleP.style.color = "red";                             // set a CSS property
+                idEleP.style.<mark>setProperty</mark>("font-size", "20px")           // set property using .setProperty()
+                idEleP.style.cssText = "font-whight:bold; color:red;"   // set CSS properties input as a text                
+                idEleP.style.<mark>removeProperty</mark>("color");                   // remove a property
+        </pre>
+        <p>Dealing with Children Elements:</p>
+        <pre>
+            //newElemen is the parent element
+            console.log(newElement.children);           // returns only nodes that are elements as an HTMLcollection even if it is one element
+            console.log(newElement.childNodes);         // returns all nodes (elements, attributes, text, comment, etc.) as an HTMLcollection
+            console.log(newElement.firstChild);         // returns the first child nodes
+            console.log(newElement.lastChild);          // returns the last child nodes
+            console.log(newElement.firstElementChild);  // returns the first element child
+            console.log(newElement.lastElementChild);   // returns the last element child
+        </pre>
+
+        <p>Navigating:</p>
+        <pre>
+            let li1 = document.getElementById("li1");   //li1 is the parent element
+            console.log(li1);
+            console.log(li1.nextSibling);
+            console.log(li1.previousSibling);
+            console.log(li1.nextElementSibling);
+            console.log(li1.previousElementSibling);
+            console.log(li1.parentElement);
+        </pre>
+
+        <h1 id="creatApp">Creating and Appending Elements</h1>
+        <pre>
+            html: 
+                &lt;p id="p2" class="class2"&gt;
+                    ...
+                    &lt;span id="span1"&gt; ... &lt;/span&gt;
+                &lt;/p&gt;
+
+            js: 
+                let newElement = document.<mark>createElement</mark>("p");           // creates an element of the specified type
+                let newAttr = document.createAttribute("name");         // creates a new attribute node, and returns it
+                let newText = document.createTextNode("New P element"); // creates a text Node
+                let newComment = document.createComment("A new P");     // creates a new comment node, and returns it.
+                
+                newElement.<mark>appendChild</mark>(newText);                        // Append textNode to an element
+                newElement.appendChild(newComment);                     // Append a comment to an element
+                document.body.appendChild(newElement);                  // Append the element to the body of the document
+               
+                otherEle.appendChild(newElement);                       // Append the element to the another element
+                newElement.<mark>remove</mark>()                                     // to remove an element
+
+                let li1 = document.getElementById("li1");               // locate an li in the HTML document
+                let createNewLi =document.createElement("li");          // creates a new li element
+                
+                li1.append(createNewLi);                                // inserts a set of Node objects or string objects after the last child of the Ele.
+                li1.prepend(createNewLi);                               // inserts a set of Node objects or string objects before the first child of the Ele.
+                li1.before(createNewLi);                                // inserts a set of Node in the children list of this Ele's parent, just before this Ele.
+                li1.after(createNewLi);                                 // inserts a set of Node in the children list of this Ele's parent, just before this Ele.             
+        </pre>
+
+        <h1 id="event">Event Handling</h1>
+        <p>Adding an Event Listener:</p>
+        <pre>
+            let evBtn = document.getElementById("btn");
+            evBtn.<mark>onclick</mark> = function() {
+                console.log("button is clicked");
+                document.getElementById('btn').textContent = "button is clicked";
+            };
+
+            function randomColorfun(ev) {
+                if (ev.target.id === 'btn2') {
+                    let randomColor = Math.floor(Math.random() * 16777215).toString(16);
+                    document.body.style.backgroundColor = randomColor;
+                }
+            }
+            btn2.<mark>addEventListener</mark>('click',randomColorfun);
+        </pre>
+        <p>Removing an Event Listener:</p>
+        <pre>
+            btn3.addEventListener('click', function(ev) {
+                if (ev.target.id === 'btn3') {
+                    btn2.<mark>removeEventListener</mark>('click',randomColorfun);
+                }
+            }, false); //false - Remove the handler from bubbling.
+        </pre>
+        <p>Capturing starts from the outermost parent and propagates downward to the target element, while bubbling starts at the target and propagates upward to its ancestors.</p>
+        <pre>
+            btnPro.addEventListener('click', function(e) {
+                console.log('The button was clicked!');
+                e.<mark>stopPropagation</mark>();                        // stops from bubbling any further
+            });
+        </pre>
+        <p>Preventing Default Behavior:</p>
+        <pre>
+            let name =document.getElementById('nameForm');
+            document.getElementById("myForm").addEventListener("submit", function(e) {
+                if (name.value === '') {
+                    console.log("prevent submitting");
+                    e.<mark>preventDefault</mark>();
+                }
+            });
+        </pre>
+        <h1 id="bom">Browser Object Model</h1>
+        <p>Window Object</p>
+        <pre>
+            window.innerHeight  // return the inner height / width of the browser window (in pixels)
+            window.innerWidth   
+            screen.width        // The window.screen object can be written without the window prefix.
+            screen.height       // returns the width / height of the screen in pixels.
+            screen.availWidth   // return width / Height of the user's screen excluding the interface features like the Windows taskbar.
+            screen.availHeight
+
+            myWin = window.<mark>open</mark>("https://courses.cs.ut.ee/2022/WAD/fall", "myWindowName", "resizable"); // open window
+            myWin.moveTo(50, 50);                                                                       // move window to specified x,y location
+
+            myWin.resizeTo(500, 500);   // resize window to 500x500
+            myWin.resizeBy(-100, -100); // make window smaller relatively by 100px
+        
+            // Location
+            window.location.<mark>href</mark>        // http://....e6-js-3.html
+            window.location.hostname    // 127.0.0.1
+            window.location.pathname    // /lecture6-js-3.html
+            window.location.protocol    // http:
+            window.location.port        // 5500
+
+            // History
+            history.length              // The history.length returns the number of URLs in the history stack.
+                                        // To navigate to a URL in the history, you use the back(), forward(), and go() methods.
+                                        // positive numbers -> forward
+                                        // Negative numbers -> backwards
+            history.back();
+            history.forward();
+            history.go();
+        </pre>
+        <h1 id="popup">Popup Boxes:</h1>
+        <pre>
+            window.<mark>alert</mark>("Hello");
+            let confirmMsg = window.<mark>confirm</mark>(“Do You agree?");   // return true / false
+            let promptMsg = <mark>prompt</mark>(“Please enter your age");
+        </pre>
+        <h1 id="timing">Timing Events</h1>
+        <pre>
+            <mark>setTimeout</mark>(function() {                 // execute after waiting specific # of millisec
+                console.log("set Timeout Msg");
+            }, 3000);
+
+            function msg() {
+                console.log(`Message to console`);
+            }
+            <mark>setInterval</mark>(msg, 1000);                 // repeats execution of function continuously
+
+            let counter = setInterval(msg, 1000);   
+            clearInterval(counter);                 // stops excution function from setInterval uses variable returned from setInterval
+        </pre>
+        <h1 id="callback">Callback Hell</h1>
+        <pre>
+            setTimeout(() => {
+                console.log("CB1 - Do something");
+                setTimeout(() => {
+                    console.log("CB2 - Do another thing");
+                    setTimeout(() => {
+                        console.log("CB3 - Do another thing");
+                        setTimeout(() => { console.log("CB4 - Do a final thing");
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
+            }, 1000);
+        </pre>
+        <h1 id="promise">Promises</h1>
+        <pre>
+            let myPromise = <mark>new Promise</mark>(function(myResolve, myReject) {     // "Producing Code" (May take some time)
+                myResolve();                                                // when successful
+                myReject();                                                 // when error
+            });
+
+            // "Consuming Code" (Must wait for a fulfilled Promise)
+            myPromise()
+            .<mark>then</mark>(
+                function(result){
+                return doSomethingElse(result);}    !!! Always return results, otherwise callbacks won't catch the result of a previous promise
+            )
+            .then(
+                function(newResult){
+                return doAnotherthing(newResult);}
+            )
+            ...
+            .<mark>catch</mark>(
+                function(error){/*code if some error*/}
+            )
+            .<mark>finally</mark>(
+                function(){/*code to be executed in any case*/}
+            );
+        </pre>
+        <p>
+            Call Stacks - LIFO (Last In, First Out) <br><br>
+            JavaScript can only do one thing at a time: <br>
+            - if asynchronous (setTimeout(), ajax(), promise, or click event) then,
+            that code gets forwarded to “Browser/Web API” <br> --> move async code to callback/event queue <br><br>
+            EventLoop: <br>
+            - runs continuously and checks the Call stack, if it does not have any --> checks callback/event queue & pops & execute code from it <br><br>
+            JobQueue: <br>
+            - reserved only for new Promise() <br><br>
+            .then(): <br>
+            - methods added to JobQueue <br>
+            - once the promise has returned/resolved --> methods from JobQueue gets executued
+        </p>
+        <h1 id="ajax">AJAX - Asynchronous JavaScript and XML</h1>
+        <p>
+            XMLHttpRequest Object: <br><br>
+            - readyState: <br>
+            0: request not initialized <br>
+            1: server connection established <br>
+            2: request received <br>
+            3: processing request <br>
+            4: request finished and response is ready <br><br>
+            - onreadystatechange: defines a function to be executed when the readyState changes
+        </p>
+        <pre>
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if(this.readyState === 4 && this.status === 200) {
+                    // code here
+                    console.log(this.responseText);
+                };
+            }
+            xhttp.open("GET", “URI");
+            xhttp.send();
+
+            xhttp.onreadystatechange = function() {
+                console.log(this.readystate)
+            }
+        </pre>
+        <p>AJAX & JSON - an example of use</p>
+        <pre>
+            let xhttp = new XMLHttpRequest();
+            xhttp.open("GET",“https://jsonplaceholder.typicode.com/posts");
+            xhttp.send();
+            xhttp.onreadystatechange = function() {
+                if(this.readyState === 4 && this.status === 200) {
+                    let posts = JSON.parse(this.responseText);
+                    for (let i = 0; i < posts.length; i++) {
+                        let div = document.createElement("div");
+                        div.className = 'post';
+                        let postTitle = document.createElement("h3");
+                        postTitle.innerText = posts[i].title;
+                        div.appendChild(postTitle);
+                        document.body.appendChild(div);
+                    }
+                };
+            }
+        </pre>
+        <h1 id="fetchAPI">Fetch API</h1>
+        <pre>
+            fetch('URI')
+            .then((response) => response.json())
+            .then((data) => console.log(data));
+        </pre>
+        <p>Fetch API & JSON - an example</p>
+        <pre>
+            fetch('https://jsonplaceholder.typicode.com/posts')
+            .then((response) => response.json())
+            .then(json => {
+                for (let i = 0; i < json.length; i++) {
+                    let div = document.createElement("div");
+                    div.className = 'post';
+                    let postTitle = document.createElement("h3");
+                    postTitle.innerText = posts[i].title;
+                    div.appendChild(postTitle);
+                    document.body.appendChild(div);
+                }
+            })
+        </pre>
+        <h1 id="json">JSON - JavaScript Object Notation</h1>
+        <p>
+            - Data is in name/value (key/value) pairs format. <br>
+            - Names require double quotes.<br>
+            - Data is separated by commas.<br>
+            - Curly braces hold objects.<br>
+            - Square brackets hold arrays <br><br>
+
+            JSON Data Types:
+        </p>
+        <pre>
+            {
+                “fName”: "John",                // string
+                “mName": null,                  // null
+                “lName”: “Doe",
+                “age”: 32,                      // number
+                “maneger":true,                 // boolean
+                “address":                      // JSON object
+                    {
+                        “country": “Estonia",
+                        “city": “Tartu”,
+                        “street": "Narva mnt 1"
+                    },
+                “experience”: [“HTML”, “CSS”]   // array
+            }
+        </pre>
+        <p>Parse = converts its type from string to JS object.</p>
+        <pre>
+            let obj = <mark>JSON.parse</mark>('{ "name": "John","age": 21, "city": “Tartu"}');
+        </pre>
+        <p>Stringify = converts a JS object to a string.</p>
+        <pre>
+            let myJson = <mark>JSON.stringify</mark>(obj);
+        </pre>
+        <a href="https://jsoneditoronline.org/" target=”_blank”>Online JSON Editor</a>
+    </div>
+</body>
+</html>

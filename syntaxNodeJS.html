@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeJS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            display: flex;
+        }
+        #sidebar {
+            width: 20%;
+            background-color: #1e1e1e;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+        #sidebar h2 {
+            color: #ffffff;
+        }
+        #sidebar a {
+            color: #76c7c0;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+        #sidebar a:hover {
+            color: #ffffff;
+        }
+        #content {
+            padding: 20px;
+            width: 70%;
+            position: absolute;
+            right: 0;
+        }
+        h1, h2 {
+            color: #76c7c0;
+        }
+        pre {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .secondary {
+            text-indent: 20px;
+        }
+        .third {
+            text-indent: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #2d2d2d;
+        }
+
+        th {
+            background-color: #333333;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+
+        tr:hover {
+            background-color: #444444;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h2>Contents</h2>
+        <a href="#global">"Global" object</a>
+        <a href="#module">Modules</a>
+        <a href="#coreModule">Core Modules</a>
+        <div class="secondary">
+            <a href="#fs">File system (fs) module</a>
+            <div class="third">
+                <a href="#reading">Reading Files</a>
+                <a href="#writing">Writing a File</a>
+                <a href="#update">Update a File</a>
+                <a href="#delete">Delete a File</a>
+            </div>
+            <a href="#basic">Creating a basic server</a>
+            <a href="#routing">Creating basic routing</a>
+        </div>
+        <a href="#express">Express Framework</a>
+        <div class="secondary">
+            <a href="#middleware">Middleware</a>
+        </div>
+        <a href="#rest">REST API</a>
+        <h2>Contents - Database</h2>
+        <a href="#begin">Relational Database</a>
+        <a href="#connect">Connect server to Postgres databse</a>
+        <a href="#request">Server routing - Handling requests</a>
+        <div class="secondary">
+            <a href="#post">Handling POST requests</a>
+            <a href="#get">Handling GET requests</a>
+            <a href="#get2">Handling GET requests with route params</a>
+            <a href="#put">Handling PUT requests</a>
+            <a href="#delete2">Handling DELETE requests</a>
+            <a href="#fetchPost">HTML Requests in View</a>
+        </div>
+        <h2>Contents - JWT</h2>
+        <a href="#jwt">JSON Web Token</a>
+        <a href="#building">Building a “secure” App</a>
+        <p><br></p>
+    </div>
+
+    <div id="content">
+        <h1 id="global">"Global" object</h1>
+        <p>
+            Similar to "Windows" object<br>Methods (use dot to access):<br>
+            - e.g., clearInterval(), setInterval(), setTimeout(), etc.
+        </p>
+        <pre>
+            console.log(global);
+
+            global.setTimeout(() => {
+                console.log("Hi")
+            }, 1000);
+
+            setTimeout(() => {
+                console.log("Hi");
+            }, 1000);
+        </pre>
+        <h1 id="module">Modules</h1>
+        <p>functionality in single/multiple JavaScript files for reuse</p>
+        <pre>
+            // import in other file (require(module_name))
+            const os = <mark>require</mark>('os');
+        </pre>
+        <h1 id="coreModule">Core Modules</h1>
+        <h3 id="fs">File system (fs) module</h3>
+        <p>- allows dealing with file system <br> - responsible asynchronous or synchronous file I/O <br> - include require()</p>
+        <h4 id="reading">Reading Files</h4>
+        <p>- fs.readFileSync() (synchronous read)<br>fs.readFile() (asynchronous read, executes callback when read complete)</p>
+        <pre>
+            const fs = require('fs');
+            // read a file Synchronously - fs.readFileSync(filename, options)
+            
+            const dataSync = fs.<mark>readFileSync</mark>('./file.txt','utf8');
+            console.log("File content:", dataSync);
+            
+            // read a file Asynchronously - fs.readFile(filename, options, callbackFun)
+            fs.<mark>readFile</mark>('./file.txt', 'utf8', function(err, dataAsync) {
+                if (err) throw err;
+                console.log("File content:", dataAsync);
+            });
+        </pre>
+        <h4 id="writing">Writing a File</h4>
+        <p>fs.writeFile() <br>- method replaces content if it exists<br>- file does not exist -> new file created</p>
+        <pre>
+            const fs = require('fs');
+
+            // write a file - fs.write(file, string, position, encoding, callback)
+            // file: a file descriptor the value returned by opening the file using the fs.open(), which creates an empty file.
+            
+            fs.<mark>writeFile</mark>('./file2.txt', 'I have been modified', (err) => {
+                if (err) return console.log(err);
+                console.log("File content: modified");
+            });
+        </pre>
+        <h4 id="update">Update a File</h4>
+        <p>fs.appendFile() appends content to end of file</p>
+        <pre>
+            const fs = require('fs');
+            //update a file
+            // fs.appendFile(file, data[, options], callback)
+
+            fs.<mark>appendFile</mark>('file2.txt', '\n This text is added by appendFile().', function(err) {
+                if (err) throw err;
+                console.log('File content: updated!');
+            });
+        </pre>
+        <h4 id="delete">Delete a File</h4>
+        <pre>
+            const fs = require('fs');
+            // delete a file - fs.unlink( file, callback )
+            
+            fs.<mark>unlink</mark>('./file2.txt', (err) => {
+                if (err) return console.log(err);
+                console.log("File is deleted");
+            });
+        </pre>
+        <h1 id="basic">Creating a basic server</h1>
+        <p>Steps: <br>1. create server.js file <br>2. include http module <br>3. create server instance <br>4. make server listen to port <br>! use nodemon !</p>
+        <pre>
+            // http is a built-in module that allows Node.js to transfer data using HTTP.
+            const http = <mark>require</mark>('http');
+
+            const server = http.<mark>createServer</mark>((req, res) => {
+                console.log(req);
+                console.log(req.url);
+                console.log(req.method);
+                res.setHeader('Content-Type', 'text/plain');    // res with Plaintext
+                res.write('First response message!');
+                res.end(); 
+            })
+
+            //The server.listen() method creates a listener on the specified port and path.
+            server.<mark>listen</mark>(3000, 'localhost', () => {
+                console.log('I am listing for requests on port 3000');
+            });
+        </pre>
+        <p>Responding with an HTML script</p>
+        <pre>
+            const http = require('http');
+            const server = http.createServer((req, res) => {
+                res.setHeader('Content-Type', 'text/html');
+                res.write('&lt;/h1>First HTML response message!&lt;/h1>');
+                res.end();
+            });
+            server.listen(3000, 'localhost', () => {
+                console.log('I am listing for requests on port 3000');
+            });
+        </pre>
+        <p>Responding with an HTML page</p>
+        <pre>
+            const http = require('http');
+            const server = http.createServer((req, res) => {
+                res.setHeader('Content-Type', 'text/html');
+                fs.readFile('./views/index.html', (err, data) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.write(data);
+                        res.end();
+                    }
+                })
+            });
+            server.listen(3000, 'localhost', () => {
+                console.log('I am listing for requests on port 3000');
+            });
+        </pre>
+        <h1 id="routing">Creating basic routing</h1>
+        <pre>
+            const http = require('http');
+            const fs = require('fs');
+            const server = http.createServer((req, res) => {
+                res.setHeader ('Content-Type', 'text/html');
+                let path = ' /views/'
+                switch (req-url) {
+                    case '/':
+                        path += 'index.html';
+                        res.statusCode = 200;
+                        break;
+                    case '/posts':
+                        path += 'posts.html';
+                        res.statusCode = 200;
+                        break;
+                    case '/contactus':
+                        path += 'contactus.html';
+                        break;
+                    default:
+                        path += '404.html';
+                        break;
+                }
+                fs. readFile(path, (err, data) => {
+                    if (err) {
+                        console. log(err);
+                    } else {
+                        res.write(data);
+                        res. end ();
+                    }
+                });
+            })
+        </pre>
+        <h1 id="express">Express Framework</h1>
+        <p>res.sendFile(): send file, absolute path --> root: __dirname<br></p>
+        <pre>
+            const express = require('express');
+            const app = express();
+
+            // listen for requests on port 3000
+            app.listen(3000);
+
+            //app.get() is used to respond to Get requests, and it takes two arguments: 1-path, and 2- function that takes in request and response objects
+            app.get('/', (req, res) => {
+                res.sendFile('./views/index.html', { root:__dirname});
+            });
+            ...
+            app.use((req, res) => {
+                res.status(404).sendFile('./views/404.html', { root: __dirname });
+            });
+        </pre>
+        <h3 id="middleware">Middleware</h3>
+        <p>- execute (on the server) during the request-response cycle<br>- access to response & request<br>- executed during when server receives request & it sends response</p>
+        <pre>
+            const express = require('express');
+            const app = express();
+            
+            // listen for requests on port 3000
+            app.listen(3000);
+            
+            // new Middleware that will block the execution
+            app.use((req, res) => {
+                console.log('a new request was made to theserver');
+            });
+
+            app.get('/', (req, res) => {
+                res.sendFile('./views/index.html', { root:__dirname});
+            });
+
+            ...
+
+            app.use((req, res) => {
+                res.status(404).sendFile('./views/404.html', { root: __dirname });
+            });
+        </pre>
+        <h1 id="rest">REST API</h1>
+        <p>- Representational state transfer <br>- allows Resource–based URLs <br>- POST, GET, PUT, DELETE<br>
+        - GET (retrieves representation of specified resource) <br>
+        - POST (submits entity of specified resource, often causing a change, for updating) <br>
+        - PUT (replace all current representations of target resources, for creating) <br>
+        - DELETE (deletes all representations of target resources) </p>
+        <p>CRUD</p>
+        <table>
+            <tr>
+                <th>HTML</th>
+                <th>CRUD</th>
+                <th>SQL</th>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>Create</td>
+                <td>INSERT</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>Read</td>
+                <td>SELECT</td>
+            </tr>
+            <tr>
+                <td>PUT</td>
+                <td>Update</td>
+                <td>UPDATE</td>
+            </tr>
+            <tr>
+                <td>DELETE</td>
+                <td>Delete</td>
+                <td>DELETE</td>
+            </tr>
+        </table>
+        <h1 id="begin">Relational Database</h1>
+        <p>SQL - Structured Query Language<br>
+        - SELECT = column(s) <br>
+        - FROM = table_name <br>
+        - WHERE = condition</p>
+        <h1 id="connect">Connect server to Postgres databse</h1>
+        <pre>
+            //database.js
+            const Pool = require('pg').Pool;
+            const pool = new Pool({
+                user: "postgres",
+                password: "[add your password here]",
+                database: "[add the database name]",
+                host: "localhost",
+                port: "5432"
+            });
+            module.exports = pool;
+
+            //server.js
+            const express = require('express');
+            const pool = require('./database');
+            const cors = require('cors')
+            const app = express();
+            app.use(cors());
+            app.use(express.json());
+        </pre>
+        <h1 id="request">Server routing - Handling requests</h1>
+        <pre>
+            // Route takes the following structure: app.method(PATH, HANDLER)
+            // app is an instance of express.
+            // method is an HTTP request method
+            // PATH is a path on the server.
+            // HANDLER is the function executed when the route is matched.
+        </pre>
+        <h3 id="post">Handling POST requests</h3>
+        <p>- add new content to table/database</p>
+        <pre>
+            // posttable is the table name
+            app.post('/api/posts/', async(req, res) => {
+                try {
+                    console.log("a post request has arrived");
+                    const post = req.body;
+                    const newpost = await pool.query(
+                        "INSERT INTO posttable(title, body,urllink) values ($1, $2, $3) RETURNING*",
+                        [post.title, post.body,post.urllink]
+                    );
+                    res.json(newpost);
+                } catch (err) {
+                    console.error(err.message);
+                }
+            });
+        </pre>
+        <h3 id="get">Handling GET requests</h3>
+        <p>- retrieve/fetches all content from table/database</p>
+        <pre>
+            // posttable is the table name
+            app.get('/api/posts', async(req, res) => {
+                try {
+                    console.log("get posts request has arrived");
+                    const posts = await pool.query(
+                        "SELECT * FROM posttable"
+                    );
+                    res.json(posts.rows);
+                } catch (err) {
+                    console.error(err.message);
+                }
+            });
+        </pre>
+        <h3 id="get2">Handling GET requests with route params</h3>
+        <pre>
+            // posttable is the table name
+            app.get('/api/posts/:id', async(req, res) => {
+                try {
+                    console.log("get a post with route
+                    parameter request has arrived");
+                    const { id } = req.params;
+
+                    // assigning all route "parameters" to the id "object"
+                    const posts = await pool.query(
+                        // pool.query runs a single query on the database.
+                        "SELECT * FROM posttable WHERE id = $1",[id]);
+                        res.json(posts.rows[0]);
+                } catch (err) {
+                    console.error(err.message);
+                }
+            });
+        </pre>
+        <h3 id="put">Handling PUT requests</h3>
+        <pre>
+            app.put('/api/posts/:id', async(req, res) => {
+                try {
+                    const { id } = req.params;
+                    const post = req.body;
+                    console.log("update request has arrived");
+                    const updatepost = await pool.query(
+                        "UPDATE posttable SET (title, body, urllink) = ($2, $3, $4) WHERE id = $1",
+                        [id, post.title, post.body, post.urllink]
+                    );
+                    res.json(updatepost);
+                } catch (err) {
+                    console.error(err.message);
+                }
+            });
+        </pre>
+        <h3 id="delete2">Handling DELETE requests</h3>
+        <pre>
+            app.delete('/api/posts/:id', async(req, res) => {
+                try {
+                    const { id } = req.params;
+                    //don't need a body
+                    console.log("delete a post request has arrived");
+                    const deletepost = await pool.query(
+                    "DELETE FROM posttable WHERE id = $1", [id]
+                    );
+                    res.json(deletepost);
+                } catch (err) {
+                    console.error(err.message);
+                }
+            });
+        </pre>
+        <h3 id="fetchPost">HTML Requests in View</h3>
+        <pre>
+            &lt;script>
+                export default {
+                    name: "AllPosts",
+                    data() { return {posts:[],};},
+                    methods: {
+                        fetchPosts() {
+                            fetch(`http://localhost:3000/api/posts/`)
+                            .then((response) => response.json())
+                            .then((data) => (this.posts = data))
+                            .catch((err) => console.log(err.message));
+                        },
+
+                        updatePost() {
+                            fetch(`http://localhost:3000/api/posts/${this.post.id}`, {
+                                method: "PUT",
+                                headers: { "Content-Type": "application/json", },
+                                body: JSON.stringify(this.post),
+                            })
+                            .then((response) => {
+                                console.log(response.data);
+                                this.$router.push("/api/allposts"); 
+                            })
+                            .catch((e) => {console.log(e); });
+                        },
+
+                        deletePost() {
+                            fetch(`http://localhost:3000/api/posts/${this.post.id}`, {
+                                method: "DELETE",
+                                headers: {"Content-Type": "application/json"},
+                            })
+                            .then((response) => {
+                                console.log(response.data);
+                                this.$router.push("/api/allposts");
+                            })
+                            .catch((e) => {console.log(e); }); 
+                        },
+
+                        fetch("http://localhost:3000/api/posts", {
+                            method: "POST",
+                            headers: {"Content-Type": "application/json", },
+                            body: JSON.stringify(data)
+                        })
+                        .then((response) => {
+                            console.log(response.data);
+                            this.$router.push("/api/allposts"); 
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                            console.log("error");})
+                    },
+
+                    mounted() {
+                        this.fetchPosts();
+                        this.fetchAPost(this.$route.params.id);
+                        console.log("mounted");
+                    },
+                };
+            &lt;/script>
+        </pre>
+        <h1 id="jwt">JSON Web Token</h1>
+        <p>created, signed and verified<br><br>JWT structure:</p>
+        <table>
+            <tr>
+                <td>Header</td>
+                <td>2 parts: type of token (here JWT), signed algorithmen (e.g. HMACSHA256, RSA)</td>
+                <td>{"alg": "HS256", "typ": "JWT"}</td>
+            </tr>
+            <tr>
+                <td>Payload</td>
+                <td>claims: statements about user & additional data</td>
+                <td>{"sub": 1234567890, "name": "John Doe", "admin": true}</td>
+            </tr>
+            <tr>
+                <td>Signature</td>
+                <td>token secure: take encoded header, encoded payload, secret & algorithmen specifies in header --> sign it</td>
+                <td>HMACSHA256(base64UrlEncode(header)+"."+base64UrlEncode(payload),secret)</td>
+            </tr>
+        </table>
+        <h1 id="building">Building a “secure” App</h1>
+        <h3 id="databaseSecure">Users table – Database (Node.js)</h3>
+        <pre>
+            // database.js
+            CREATE TABLE IF NOT EXISTS "users" (
+                id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+                email VARCHAR(200) NOT NULL UNIQUE,
+                password VARCHAR(200) NOT NULL
+            );
+
+            /*
+                gen_random_uuid() A system function to generate a random Universally Unique
+                IDentifier (UUID)
+                An example of generated uuid: 32165102-4866-4d2d-b90c-7a2fddbb6bc8
+            */ 
+        </pre>
+        <h3 id="backendSecure">server.js – Backend</h3>
+        <pre>
+            // server.js
+            const express = require('express');
+            const pool = require('./database');
+            const cors = require('cors');
+            const bcrypt = require('bcrypt');
+            const cookieParser = require('cookie-parser');
+            const jwt = require('jsonwebtoken');
+            const port = process.env.PORT || 3000;
+            const app = express();
+            app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
+            // We need to include "credentials: true" to allow cookies to be represented
+            // Also "credentials: 'include'" need to be added in Fetch API in the Vue.js App
+
+            app.use(express.json()); // Parses incoming requests with JSON payloads and is based on body-parser.
+            app.use(cookieParser()); // Parse Cookie header and populate req.cookies with an object keyed by the cookie names.
+        </pre>
+        <h3 id="backendSecure2">Signup – Backend (Node.js)</h3>
+        <pre>
+            // server.js
+            // generateJWT function
+            const secret = "gdgdhdbcb770785rgdzqws"; // use a stronger secret
+            const maxAge = 60 * 60;
+
+            // unlike cookies, the expiresIn in jwt token is calculated by seconds not milliseconds
+            const generateJWT = (id) => {
+                return jwt.sign({ id }, secret, { expiresIn: maxAge })
+            }
+
+            app.post('/auth/signup', async(req, res) => {
+                try {
+                    const { email, password } = req.body;
+                    const salt = await bcrypt.genSalt();
+                    const bcryptPassword = await bcrypt.hash(password, salt);
+
+                    const authUser = await pool.query(
+                        "INSERT INTO users(email, password) values ($1, $2) RETURNING*",
+                        [email, bcryptPassword]);
+                    
+                    const token = await generateJWT(authUser.rows[0].id);
+
+                    res
+                    .status(201)
+                    .cookie('jwt', token, { maxAge: 6000000, httpOnly: true })
+                    .json({ user_id: authUser.rows[0].id })
+                    .send;
+                } catch (err) {
+                    res.status(400).send(err.message);
+                }
+            });
+        </pre>
+        <h3 id="backendSecure3">Login – Backend (Node.js)</h3>
+        <pre>
+            app.post('/auth/login', async(req, res) => {
+                try {
+                    const { email, password } = req.body;
+                    const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+
+                    if (user.rows.length === 0)
+                        return res.status(401).json({ error: "User is not registered" });
+                    const validPassword = await bcrypt.compare(password, user.rows[0].password);
+
+                    if (!validPassword)
+                        return res.status(401).json({ error: "Incorrect password" });
+                    const token = await generateJWT(user.rows[0].id);
+
+                    res
+                    .status(201)
+                    .cookie('jwt', token, {maxAge: 6000000, httpOnly: true })
+                    .json({ user_id: user.rows[0].id })
+                    .send;
+                } catch (error) {
+                    res
+                    .status(401)
+                    .json({ error: error.message });
+                }
+            });
+        </pre>
+        <h3 id="backendSecure4">Authenticate – Backend (Node.js)</h3>
+        <pre>
+            app.get('/auth/authenticate', async(req, res) => {
+                const token = req.cookies.jwt;
+                let authenticated = false;
+                try {
+                    if (token) {        //checks if the token exists
+
+                        //jwt.verify(token, secretOrPublicKey, [options, callback])
+                        await jwt.verify(token, secret, (err) => {  //token exists
+                            if (err) { // not verified, redirect to login page
+                                console.log(err.message);
+                                res.send({ "authenticated": authenticated }); // false
+                            } else {    // token exists and it is verified
+                                authenticated = true;
+                                res.send({ "authenticated": authenticated }); // true
+                            }
+                        })
+                    }
+                    else {res.send({ "authenticated": authenticated });} // false
+                }
+                catch (err) {
+                    res.status(400).send(err.message);
+                }
+            });
+        </pre>
+        <h3 id="backendSecure5">Logout – Backend (Node.js)</h3>
+        <pre>
+            app.get('/auth/logout', (req, res) => {
+                console.log('delete jwt request arrived');
+                res
+                .status(202)
+                .clearCookie('jwt')
+                .send('cookie cleared')
+            });
+        </pre>
+        <h3 id="frontend">Navigation guard</h3>
+        <pre>
+            // ../router/index.js
+            ...
+            import auth from "../auth";
+            const routes = [{
+                path: "/",
+                name: "home",
+                component: HomeView,
+                beforeEnter: async(to, from, next) => {
+                    let authResult = await auth.authenticated();
+                    if (!authResult) {
+                        next('/login')
+                    } else {
+                        next();
+                    }
+                }
+            },
+            ...
+        </pre>
+        <h3 id="frontend1">Auth.js</h3>
+        <pre>
+            // ../auth.js
+            export default {
+                user: { authenticated: false },
+                authenticated: function() {
+                fetch("http://localhost:3000/auth/authenticate", {
+                    credentials: 'include'})    // Don't forget to specify this if you need cookies
+                        .then((response) => response.json())
+                        .then((data) => {
+                            this.user.authenticated = data.authenticated;
+                        })
+                        .catch((e) => {
+                            console.log("error logout");
+                        });
+                        
+                        return this.user.authenticated;
+                    }
+                }
+        </pre>
+        <h3 id="frontend2">Login.vue - Template</h3>
+        <pre>
+            // login.vue &lt;template>
+            &lt;template>
+                &lt;div class="form">
+                    &lt;h3>LogIn&lt;/h3>
+                    &lt;label for="email">Email&lt;/label>
+                    &lt;input type="email" name="email" required v-model="email">
+                    &lt;label for="password">Password&lt;/label>
+                    &lt;input type="password" name="password" required v-model="password">
+                    &lt;div class="container">
+                        &lt;button @click="LogIn" class="center">LogIn&lt;/button>
+                        &lt;button @click='this.$router.push("/signup")' class="center">Signup&lt;/button>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/template>
+        </pre>
+        <h3 id="frontend3">Login.vue - LogIn()</h3>
+        <pre>
+            // login.vue &lt;script>
+            LogIn() {
+                var data = {email: this.email, password: this.password};
+                fetch("http://localhost:3000/auth/login", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json",},
+                    credentials: 'include', // Don't forget to specify this if you need cookies
+                    body: JSON.stringify(data)
+                })
+                .then((response) => response.json())
+                .then(() => {
+                    console.log(data);
+                    location.assign("/");
+                })
+                .catch((e) => {
+                    console.log("error");
+                });
+            }
+        </pre>
+        <h3 id="frontend4">SignUp.vue - Template</h3>
+        <pre>
+            // SignUp.vue &lt;template>
+            &lt;template>
+                &lt;div class="form">
+                    &lt;h3>SignUp&lt;/h3>
+                    &lt;label for="email">Email&lt;/label>
+                    &lt;input type="email" name="email" required v-model="email">
+                    &lt;label for="password">Password&lt;/label>
+                    &lt;input type="password" name="password" required v-model="password">
+                    &lt;button @click="SignUp" class="SignUp">SignUp&lt;/button>
+                &lt;/div>
+            &lt;/template>
+        </pre>
+        <h3 id="frontend5">SignUp.vue - SignUp()</h3>
+        <pre>
+            // SignUp.vue &lt;script>
+            SignUp() {
+                var data = {email: this.email, password: this.password};
+                fetch("http://localhost:3000/auth/signup", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    credentials: 'include', // Don't forget to specify this if you need cookies
+                    body: JSON.stringify(data)
+                })
+                .then((response) => response.json())
+                .then(() => {
+                location.assign("/");})
+                .catch((e) => {
+                console.log("error");});
+            }
+        </pre>
+        <h3 id="frontend6">HomeView.vue - Logout()</h3>
+        <pre>
+            // HomeView.vue &lt;script>
+            &lt;template>
+            ...
+            &lt;button v-if = "authResult" @click="Logout" class="center">Logout&lt;/button>
+            ...
+            &lt;/template>
+            &lt;script>
+            ...
+            Logout() {
+                fetch("http://localhost:3000/auth/logout", {credentials: 'include'})
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log('jwt removed');
+                    location.assign("/"); // why redirect to the home directory?
+                })
+                .catch((e) => {console.log("error logout");});
+            }
+        </pre>
+    </div>
+</body>
+</html>

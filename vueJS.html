@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue JS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            display: flex;
+        }
+        #sidebar {
+            width: 20%;
+            background-color: #1e1e1e;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+        #sidebar h2 {
+            color: #ffffff;
+        }
+        #sidebar a {
+            color: #76c7c0;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+        #sidebar a:hover {
+            color: #ffffff;
+        }
+        #content {
+            padding: 20px;
+            width: 70%;
+            position: absolute;
+            right: 0;
+        }
+        h1, h2 {
+            color: #76c7c0;
+        }
+        pre {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .secondary {
+            text-indent: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h2 style="margin-top: -10px;">Contents</h2>
+        <a href="#start">Vue CLI project</a>
+        <a href="#viewRout">Views & Vue Router</a>
+        <a href="#components">Components</a>
+        <a href="#dpm">Data, Props & Methods</a>
+        <a href="#directives">Directives</a>
+        <div class="secondary">
+            <a href="#text">v-text</a>
+            <a href="#html">v-html</a>
+            <a href="#on">v-on</a>
+            <a href="#show">v-show</a>
+            <a href="#once">v-once</a>
+            <a href="#if">v-if, v-else-if & v-else</a>
+            <a href="#bind">v-bind</a>
+            <a href="#model">v-model</a>
+            <a href="#for">v-for</a>
+        </div>
+        <a href="#comp">Computed & Watched Properties</a>
+        <a href="#lifecycle">Lifecycle Hooks</a>
+        <h2>Contents - Vuex</h2>
+        <a href="#coreP">Core Concepts</a>
+        <div class="secondary">
+            <a href="#state">State</a>
+            <a href="#getters">Getters</a>
+            <a href="#mutations">Mutations</a>
+            <a href="#actions">Actions</a>
+        </div>
+    </div>
+
+    <div id="content">
+        <h1 id="start">Vue CLI project</h1>
+        <p>src directory contains:<br>
+            - assets <br><br>
+            - components <br>
+            + HellowWorld.vue <br><br>
+            - router <br>
+            + index.js <br><br>
+            - store <br><br>
+            - views <br>
+            + About.vue <br>
+            + Home.vue <br><br>
+            - App.vue <br><br>
+            - main.js</p><br>
+        <h1 id="viewRout">Views & Vue Router</h1>
+        <p>Create a View:<br>1. in Views directory new file <br> 2. export view <br><br> Example:</p>
+        <pre>
+            &lt;template&gt;
+                &lt;div class="view1"&gt;
+                    &lt;h1>This is a new view page&lt;/h1&gt;
+                &lt;/div&gt;
+            &lt;/template&gt;
+
+            &lt;script&gt;
+                export default {
+                    name: "View1",
+                }
+            &lt;/script&gt;
+        </pre>
+        <p>Create a Vue Route:<br>1. in route/index.js update routes array <br>2. register/import new view<br><br>Example:</p>
+        <pre>
+            import { createRouter, createWebHashHistory } from "vue-router";
+            import HomeView from "../views/HomeView.vue";
+            import View1 from "../views/View1.vue";
+
+            const routes = [
+            {
+                path: "/",
+                name: "home",
+                component: HomeView,
+            },
+            {
+                path: "/view1",
+                name: "view1",
+                component: View1,
+            }
+            ]
+
+            const router = createRouter({
+                history: createWebHashHistory(),
+                routes,
+            });
+              
+            export default router;
+        </pre>
+        <p>Create router-link: <br>1. add in App.vue <br> 2. use &lt;router-link /&gt; <br><br>Example: </p>
+        <pre>
+            &lt;template>
+                &lt;nav>
+                    &lt;router-link to="/">Home&lt;/router-link> |
+                    &lt;router-link to="/view1">View1&lt;/router-link> |
+                &lt;/nav>
+                &lt;router-view />
+            &lt;/template>
+        </pre>
+        <h1 id="components">Components</h1>
+        <p>resuable instances --> allows to encapsulate the template, logic, and styling</p>
+        <p>Create a Component: <br> 1. in components directory new file <br>2. add structure &lt;template>&lt;scrip>&lt;style><br>3. export default component<br><br>Example:</p>
+        <pre>
+            &lt;template>
+                &lt;div class="comp">
+                    &lt;h2>{{msg}}&lt;/h2>
+                &lt;/div>
+            &lt;/template>
+
+            &lt;script>                     // contains the “data” and most of the logic ()
+                export default {
+                    name: "newCompo",
+                    props: {             // passing data to components
+                        msg: String,
+                    }
+                }
+            &lt;/script>
+
+            &lt;style scoped>               // each *.vue file may contain it, scoped = limited defined styling to component
+                h2 {
+                    color: green;
+                }
+            &lt;/style>
+        </pre>
+        <p>Use Component: <br>1. register/import component in other component / view <br>2. use component as a tag <br><br>Example: </p>
+        <pre>
+            &lt;template&gt;
+                &lt;div class="view1"&gt;
+                    &lt;h1>This is a new view page&lt;/h1&gt;
+                    &lt;new-compo msg="Hi this is a new compo"/>
+                &lt;/div&gt;
+            &lt;/template&gt;
+
+            &lt;script&gt;
+                import newCompo from "@/components/newCompo.vue";
+                export default {
+                    name: "View1",
+                    components: {
+                        newCompo
+                    }
+                }
+            &lt;/script&gt;
+        </pre>
+        <h1 id="dpm">Data, Props & Methods</h1>
+        <h3>Data</h3>
+        <p>- declared as a function (returns data object(s))<br>
+            - providing a data function --> every new instance created --> call it return copy of inital data <br>
+            - basic data binding = text interpolation {{}} <br><br> Example:
+        </p>
+        <pre>
+            data: () => {
+                return {
+                    HiText: "Hello World!",
+                    isTrue: Boolean,
+                    objArray: [
+                        {id: 1, name: "name1", ...},
+                        id: 2, name: "name2", ...},
+                        ...
+                    ]
+                }
+            }
+        </pre>
+        <h3>Props</h3>
+        <p>- indicate what external data should be passed to component <br> - propagated (passed) & managed from parent<br><br>Example: </p>
+        <pre>
+            &lt;template>
+                &lt;div class="comp">
+                    &lt;h2>{{"Props: "msg}}&lt;/h2>
+                    &lt;h3>{{"Data: "+ HiText}}&lt;/h3>
+                &lt;/div>
+            &lt;/template>
+        </pre>
+        <h3>Props checks & validators</h3>
+        <p>- Type checks <br>- default (default value used if resolved prop value undefined) <br>- required (optional in default) <br>- Custom validator function (prop value as argument)<br><br>Example: </p>
+        <pre>
+            &lt;script>
+                export default {
+                    name: "newCompo",
+                    props: {
+                        msg: {type: String, required: true, default: "no props passed", 
+                                validator: (value) => {return value != ""},
+                             }
+                    }
+                }
+            &lt;/script>
+        </pre>
+        <h3>Methods</h3>
+        <p>accessed directly in Vue instance, or can be used in directive expressions<br>this = automatically bound to the Vue instance<br><br>Example: </p>
+        <pre>
+            &lt;script>
+                ...
+                methods: {
+                    sayHi: function(event){
+                        alert("Hello" + this.HiText + "!")
+                    }
+                }
+            &lt;/script>
+        </pre>
+        <h1 id="directives">Directives</h1>
+        <h3 id="text">v-text</h3>
+        <p> updates & overwrite the element's text content<br> if need to update a part of text content use {{}}</p>
+        <pre>
+            &lt;span v-text="msg">&lt;/span>
+        </pre>
+        <h3 id="html">v-html</h3>
+        <p>updates the element's innerHTML & expects String</p>
+        <pre>
+            &lt;p v-html="messageHtml">&lt;/p>
+            &lt;!-- messageHtml: "&lt;h1> Hi I am an HTML&lt;h1/>“ -->
+        </pre>
+        <h3 id="on">v-on</h3>
+        <p>- shorthand: @<br>- attaches event listener to element <br>- expression: inline or method</p>
+        <pre>
+            &lt;!-- method handler -->
+            &lt;button @click="dosomething">&lt;/button>
+
+            &lt;!-- inline statement -->
+            &lt;button v-on:click=" dosomething('hello', $event)">&lt;/button>
+        </pre>
+        <h3 id="show">v-show</h3>
+        <p>toggles elements visibility based on truthfullness of expression</p>
+        <pre>
+            &lt;h1 v-show="true"> Hello! &lt;/h1>
+            &lt;h1 v-show ="count>4"> count: {{count}} &lt;/h1>
+        </pre>
+        <h3 id="once">v-once</h3>
+        <p>render element & component only once (skips future updates)</p>
+        <pre>
+            &lt;new-compo v-once msg = "This is a new compo" />
+        </pre>
+        <h3 id="if">v-if, v-else-if & v-else</h3>
+        <pre>
+            &lt;p v-if="Math.random() > 0.4"> Appear if random number bigger than 0.4 &lt;/p>
+            &lt;p v-else-if="Math.random() == 0.4"> Appear if random number equal to 0.4 &lt;/p>
+            &lt;p v-else> "random number not bigger than 0.4" &lt;/p>
+        </pre>
+        <h3 id="bind">v-bind</h3>
+        <p>- shorthand: :<br>- dynamically bind one/more attributes/component prop to an expression</p>
+        <pre>
+            &lt;!-- bind an attribute -->
+            &lt;img v-bind:src="imageSrc">
+
+            &lt;!-- shorthand -->
+            &lt;input type = "text" :value="writeSomething“>
+        </pre>
+        <h3 id="model">v-model</h3>
+        <p>two-way binding on form input element or component</p>
+        <pre>
+            &lt;input type = "text" v-model ="writeSomething“>
+        </pre>
+        <h3 id="for">v-for</h3>
+        <p>render multiple times based on source data, need to bind key</p>
+        <pre>
+            &lt;ul>
+                &lt;li v-for= "compo in compoArray“ :key="compo.id">
+                    &lt;span> &lt;b>Id:&lt;/b>{{compo.id}} &lt;/span> &lt;br/>
+                    &lt;span> &lt;b>Msg desc.:&lt;/b> {{compo.msg}} &lt;/span>
+                &lt;/li>
+            &lt;/ul>
+        </pre>
+        <h1 id="comp">Computed & Watched Properties</h1>
+        <h3>Computed Properties</h3>
+        <p>- create property used to modify, manipulate, and display data within components<br>- reduce complexity of &lt;template><br>- will be recalculated when some data changes in component</p>
+        <pre>
+            computed: {
+                toBePaidComputed: function(){
+                    console.log("Computed Run");
+                    var money = "Computed sum to be paid = "+ (this.billsToBePaid[0].price) + " Euro";
+                    console.log(money);
+                    return money;
+                }
+            }
+        </pre>
+        <h3>Watched Properties</h3>
+        <p>listen to component data & run whenever they change a particular property</p>
+        <pre>
+            &lt;label> Pay in Euro &lt;/label>
+            &lt;input type="text" v-model="Euro">&lt;br>
+            &lt;label> Pay in US Dollar &lt;/label>
+            &lt;input type="text" v-model="Dollar" >&lt;br>
+
+            watch: {
+                Euro: function(w){
+                    this.Dollar = w*2;
+                },
+                Dollar: function(w){
+                    this.Euro = w/2;
+                }
+            }
+        </pre>
+        <h1 id="lifecycle">Lifecycle Hooks</h1>
+        <p>
+            - beforeCreate<br>
+            - created (synchronously, after instance created, data observation & computed properties & methods & watch/event callback are setup, $el property not yet available)<br>
+            - beforeMount <br>
+            - mounted (after instance mounted, el replaced by newly created vm.$el, used for fetching data from "external sources")<br>
+            - beforeUpdate <br>
+            - updated <br>
+            - beforeUnmount <br>
+            - unmounted
+        </p>
+        <h1 id="coreP">Four core concepts - state, mutations, actions, getters</h1>
+        <p>
+            state: data stored <br>
+            mutations: to track & commit state changes <br>
+            actions: to call mutations <br>
+            getters: similar to computed properties
+        </p>
+        <pre>
+            import { createStore } from "vuex";
+
+            export default createStore({
+                strict: true,   // Vuex state cannot be mutated outside of the mutation handlers
+                state: {},
+                getters: {},
+                mutations: {},
+                actions: {},
+                modules: {},
+            });
+        </pre>
+        <h3 id="state">State</h3>
+        <pre>
+            import { createStore } from "vuex";
+            export default createStore({
+                strict: true,
+                state: {
+                    productList: [
+                        { id: 1, auther: "Hello", ...},
+                        { id: 2, auther: "World", ...},
+                        ...
+                    ]
+                },
+                getters: {},
+                mutations: {},
+                actions: {},
+                modules: {},
+            });
+
+
+            // in component / view:
+
+            ...
+            computed: {
+                productList(){
+                    return this.$store.state.productlist    // access to productList in component
+                },
+            },
+            ...
+        </pre>
+        <h3 id="getters">Getters</h3>
+        <pre>
+            import { createStore } from 'vuex'
+            export default createStore({
+                state: {...},
+                getters: {
+                    productListSale: state => {
+                        var productListsale = state.productList.map(product => { return { price: product.price / 2 ...}});
+                        return productListsale
+                    }
+                },
+                ...
+            })
+
+            // in component /  view
+
+            ...
+            computed: {
+                productList(){
+                    return this.$store.getters.productListSale
+                }
+            }
+            ...
+        </pre>
+        <h3 id="mutations">Mutations</h3>
+        <pre>
+            // store/index.js
+            ...
+            mutations: {
+                IncreasePrice: state => {state.productList.forEach(product => {product.price += 1;})},
+                DecreasePrice: state => {state.productList.forEach(product => {product.price -= 1;})}
+            },
+            ...
+
+            // View.vue
+            &lt;template>
+                &lt;div class="products">
+                &lt;button v-on:click="IncreasePrice "> Increase price &lt;/button>
+                &lt;button v-on:click="DecreasePrice"> Decrease price &lt;/button>
+                &lt;/div>
+            &lt;/template>
+            ...
+                methods: {
+                    IncreasePrice: function() {this.$store.commit("IncreasePrice")},
+                    DecreasePrice: function() {this.$store.commit("DecreasePrice")}
+                }
+        </pre>
+        <h3 id="actions">Actions</h3>
+        <pre>
+            // store/index.js
+            ...
+            actions: {
+                IncreasePriceAct: act => {setTimeout(function() {act.commit("IncreasePrice")}, 1000)},
+                ...
+            }
+            ...
+
+            // View.vue
+            &lt;template>
+                &lt;div class="products">
+                &lt;button v-on:click="IncreasePrice "> Increase price &lt;/button>
+                &lt;button v-on:click="DecreasePrice"> Decrease price &lt;/button>
+                &lt;/div>
+            &lt;/template>
+            ...
+                methods: {
+                    IncreasePrice: function() {this.$store.dispatch("IncreasePriceAct")},
+                    DecreasePrice: function() {this.$store.dispatch("DecreasePriceAct")}
+                }
+        </pre>
+    </div>
+</body>
+</html>

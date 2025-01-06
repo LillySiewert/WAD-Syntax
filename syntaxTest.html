@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            display: flex;
+        }
+        #sidebar {
+            width: 20%;
+            background-color: #1e1e1e;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+        #sidebar h2 {
+            color: #ffffff;
+        }
+        #sidebar a {
+            color: #76c7c0;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+        #sidebar a:hover {
+            color: #ffffff;
+        }
+        #content {
+            padding: 20px;
+            width: 70%;
+            position: absolute;
+            right: 0;
+        }
+        h1, h2 {
+            color: #76c7c0;
+        }
+        pre {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .secondary {
+            text-indent: 20px;
+        }
+        .third {
+            text-indent: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #2d2d2d;
+        }
+
+        th {
+            background-color: #333333;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+
+        tr:hover {
+            background-color: #444444;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h2>Contents</h2>
+        <a href="#create">Create a test</a>
+        <a href="#essential">Essential Commands</a>
+        <div class="secondary">
+            <a href="#visit">cy.vist()</a>
+            <a href="#contains">cy.contains()</a>
+            <a href="#get">cy.get()</a>
+            <a href="#click">element.click()</a>
+            <a href="#type">element.type()</a>
+            <a href="#find">element.find()</a>
+            <a href="#log">cy.log()</a>
+            <a href="#wait">cy.wait()</a>
+            <a href="#should">.should()</a>
+            <a href="#and">.and()</a>
+        </div>
+        <a href="#selectors">CSS Selectors in Cypress</a>
+        <a href="#implicit">Implicit Assertion</a>
+        <a href="#explicit">Explicit Assertion</a>
+        <a href="#examples">Examples Assertions</a>
+        <a href="#api">API Testing</a>
+        <p><br></p>
+    </div>
+
+    <div id="content">
+        <h1 id="create">Create a test in Cypress</h1>
+        <p>1. put application into specific state <br> 2. take some actions <br> 3. check resulting application state & compare</p>
+        <pre>
+            //cypress/e2e/wad.cy.js
+            /// &lt;reference types = "cypress"/> // to allow autocomplete ..
+            describe('First Test', function() {
+                it('WAD-HW4', () => {
+                    cy.visit('https://courses.cs.ut.ee/courses')
+                    cy.wait(2000)
+                    cy.get('.lang-button').click()
+                    cy.wait(2000)
+                    cy.get('[data-id="3664"] > .py-2').click()
+                    cy.wait(2000)
+                    cy.get(':nth-child(4) > .wikilink').click()
+                })
+            })
+        </pre>
+        <h1 id="essential">Essential Commands</h1>
+        <p>describe() = group test cases, 2 arguments: 1. name of test group 2. callback function</p>
+        <p>context() = alias for describe()</p>
+        <p>it() = individual test case, 2 arguments: 1. string (explaining what) 2. callback function (contains actual test)</p>
+        <p>specify() = alias for it()</p>
+        <h3 id="visit">cy.visit()</h3>
+        <p>launches URL</p>
+        <pre>
+            cy.visit('http://localhost:8080/api/signup')
+        </pre>
+        <h3 id="contains">cy.contains()</h3>
+        <p>obtains DOM element that contain the content</p>
+        <pre>
+            cy.contains('Password must be at least 8 characters')
+        </pre>
+        <h3 id="get">cy.get()</h3>
+        <p>gets element(s) based on the passed selector</p>
+        <pre>
+            cy.get('.button')
+        </pre>
+        <h3 id="click">element.click()</h3>
+        <p>clicks an element in the DOM</p>
+        <pre>
+            cy.get('.button').click()
+        </pre>
+        <h3 id="type">element.type()</h3>
+        <p>types into an element in the DOM</p>
+        <pre>
+            cy.get(‘.input').type('name@ut.ee')
+        </pre>
+        <h3 id="find">element.find()</h3>
+        <p>obtains the descendant elements of a particular locator</p>
+        <pre>
+            cy.get('tr').find('td') //obtain td from tr
+        </pre>
+        <h3 id="log">cy.log()</h3>
+        <p>prints the messages to the Command Log</p>
+        <pre>
+            cy.log('Cypress logging')
+        </pre>
+        <h3 id="wait">cy.wait()</h3>
+        <p>waits for a certain time in milliseconds</p>
+        <pre>
+            cy.wait(1000) // one second
+        </pre>
+        <h3 id="should">.should()</h3>
+        <p>used to create an assertion</p>
+        <pre>
+            cy.get('button').should('be.visible')
+        </pre>
+        <h3 id="and">.and()</h3>
+        <p>used to create an assertion</p>
+        <pre>
+            cy.get('button').should('be.visible').and('be.enabled')
+        </pre>
+        <h1 id="selectors">CSS Selectors in Cypress</h1>
+        <pre>
+            // ID selector matches the element that has the same id.
+            cy.get('#login-btn') 
+
+            // Class selector matches the elements that have the same class.
+            cy.get('.email')
+
+            // Type selector matches the 'span' elements from the given page.
+            cy.get('span')
+
+            // Has attribute selector matches the element that has the specified attribute.
+            cy.get('[data-active]')
+        </pre>
+        <a href="https://www.browserstack.com/guide/cypress-css-selectors">Guide Cypress Css Selectors</a>
+        <h1 id="implicit">Implicit Assertion</h1>
+        <p>If an assertion is applicable to an object obtained from the parent command</p>
+        <p>.and() & .should()</p>
+        <pre>
+            it('Scenario 1', function (){
+                // test step to launch a URL
+                cy.visit("https://www.tutorialspoint.com/videotutorials/index.php")
+                // assertion to validate count of sub-elements and class attribute value
+                cy.get('selector').find('li').should('have.length',5)
+                .and('have.class', 'dropdown')
+            });
+        </pre>
+        <h1 id="explicit">Explicit Assertion</h1>
+        <p>If an assertion is applicable to an object directly</p>
+        <p>assert & expect</p>
+        <pre>
+            it("Get all posts", function() {
+                // cy.request () reach out for a remote server and expect a response.
+                cy.request("GET", "http://localhost:3000/api/posts", {}).then((res) => {
+                    cy.log(res.body['0'].id)
+                    <mark>expect</mark>(res.body['0']).have.property('id')
+                    expect(res.body['0'].id).to.equal(230)
+                    let post = res.body
+                    <mark>assert</mark>.isArray(post, 'value is object')
+                });
+            })
+        </pre>
+        <h1 id="examples">Examples Assertions</h1>
+        <pre>
+            // length: checks the count of the specified element
+            cy.get('input').length > 2
+
+            // value: checks whether the web element has a certain value.
+            cy.get('#txt').should('have.value', 'Cypress')
+
+            // class: checks whether the web element possesses a certain class.
+            cy.get('#txt'').should('have.class', 'input')
+
+            // contain: checks whether the web element possesses a certain text.
+            cy.get('#txt'').should('contain', 'Cypress')
+
+            // visible: checks whether the web element is visible.
+            cy.get('#txt'').should('be.visible')
+            
+            // exist checks whether the web element is available in the DOM.
+            cy.get('#txt'').should('exist')
+            
+            // css: checks whether the web element possesses a certain css property.
+            cy.get('#txt').should('have.css', 'display')
+        </pre>
+        <h1 id="api">API Testing</h1>
+        <p>cy.request() --> expects server to be available & sends response</p>
+        <pre>
+            it("Get all posts", function() {
+                cy.request("GET", "http://localhost:3000/api/posts", {}).then((res) => {
+                    cy.log(res.body)
+                    expect(res.body['0']).have.property('id')
+                    let posts = res.body
+                    assert.isArray(posts, 'value is an array')
+                });
+            })
+
+            it("Get a post based on its id", function() {
+                let postId = 262 //Change the value to an id of a post in your database
+                cy.request("GET", `http://localhost:3000/api/posts/${postId}`, {}).then((res) =>
+                    {
+                    expect(res.body.id).to.equal(postId)
+                    expect(res.body.title).to.equal('Post 3') //post title in my database
+                });
+            })
+
+            it("Add post request", function() {
+                cy.request('POST', 'http://localhost:3000/api/posts', {
+                    "title": "Post 4",
+                    "body": "Post body 4",
+                    "urllink": "Post 4 urllink"
+                })
+                .then((res) => {
+                    cy.log(res.body)
+                    let post = res.body.rows['0'].id
+                    expect(post).to.not.be.null; // to guarantee that the post has been added
+                    cy.log('post is added')
+                });
+            })
+        </pre>
+    </div>
+</body>
+</html>

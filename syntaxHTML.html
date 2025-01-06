@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!--helps browser to display web pages correctly-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="keywords" content="HTML, CSS">
+        <meta name="author" content="Author">
+        <!-- metadata will not be displayed -->
+
+        <!-- links -->
+            <!-- defines relationship between current document and external resource -->
+            <!-- rel - specifies relationship, is required -->
+            <!-- href - specifies location of external resource -->
+            <link rel="icon" type="image/x-icon" href="favicon.ico" />
+            <!-- embedding external css: -->
+            <link rel="stylesheet" href="/res/htmlstyle.css" />
+
+        <!-- title will be displayed for the tab -->
+        <title>HTML</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="heading">Default Tags</h1>
+            <!-- default tags -->
+                <!-- h1 - h6 headings -->
+                <h1>Heading 1</h1>
+                <h2>Heading 2</h2>
+                <h3>Heading 3</h3>
+                <h4>Heading 4</h4>
+                <h5>Heading 5</h5>
+                <h6>Heading 6</h6>
+            
+                <!-- other -->
+                <p>Paragraph of text</p>
+                <div>division/section in HTML code</div>
+
+            <!-- formatting in text -->
+                <!-- use <b> instead of <strong> -->
+                <p>This text is <b>bold</b></p>
+                <p>This text is <strong>bold</strong></p>
+                <!-- use <i> instead of <em> -->
+                <p>This text is <i>italic</i></p>
+                <p>This text is <em>italic</em></p>
+
+                <p>This text has a <sup>supscript</sup></p>
+                <p>This text has a <sub>subscript</sub></p>
+
+                <p>This text is <small>small</small></p>
+                <p>This text is <mark>marked</mark></p>
+                <p>This text is <del>deleted</del></p>
+                <p>This text is <ins>inserted</ins></p>
+        </div>
+
+        <div class="container">
+            <h1 class="heading">Lists</h1>
+            <!-- lists -->
+                <!-- unorderd list - each item with <li> -->
+                <ul>
+                    <li>unorderd</li>
+                    <li>list</li>
+                </ul>
+                <!-- order list - each item with <li> -->
+                <ol>
+                    <li>orderd</li>
+                    <li>list</li>
+                </ol>
+                <!-- definition list - terms with <dt>, definitions with <dd> -->
+                <dl>
+                    <dt>definition</dt>
+                    <dd>list</dd>
+                </dl>
+        </div>
+
+        <div class="container">
+            <h1 class="heading">Tables</h1>
+            <!-- tables -->
+                <!-- define table - <table> -->
+                <table>
+                    <!-- define table  - <tr> -->
+                    <tr>
+                        <!-- define table header cell - <th> -->
+                        <th>name</th>
+                        <th>age</th>
+                    </tr>
+                    <tr>
+                        <!-- define table column cell data - <td> -->
+                        <td>John</td>
+                        <td>42</td>
+                    </tr>
+                </table>
+        </div>
+        
+        <div class="container">
+            <h1 class="heading">Anchor</h1>
+            <!-- anchor -->
+                <!-- define a hyperlik to destination href -->
+                <a href="https://courses.cs.ut.ee/2024/WAD/fall/Main/Lectures">WAD</a>
+            
+            <!-- line break -->
+                <br>
+        </div>
+
+        <div class="container">
+            <h1 class="heading">Images</h1>
+            <!-- images -->
+                <!-- <img> embedded image into page, needs no closing tag-->
+                <!-- src - path / location -->
+                <!-- alt - alternative text -->
+                <img src="res/pic.png" alt="A example picture" width="200px">
+        </div>
+
+        <div class="container">
+            <h1 class="heading">Forms</h1>
+            <!-- forms -->
+                <!-- <form> used to create HTML form for user input -->
+                <!-- action - specifies send location for form-data when submitted -->
+                <!-- method - specifies used HTML method when submitted (Get or Post) -->
+                
+                <form action="/syntax.html" method="get">
+                    <!-- label for id or name of input element -->
+                    <label for="name">name: </label>
+                    <!-- name for submitting form, id for css -->
+                    <input type="text" name="name" id="name"> <br>
+
+                    <!-- value - set text which is sended when form is submitted -->
+                    <!-- if name is equal only one of the values is send when submitted -->
+                    <label for="radioMul">radio: </label> <br>
+                    <label for="radio1">Option 1</label>
+                    <input type="radio" name="radioMul" id="radio1" value="option 1"> <br>
+                    <label for="radio1">Option 2</label>
+                    <input type="radio" name="radioMul" id="radio2" value="option 2"> <br>
+                    <label for="radio3">Option 3</label>
+                    <input type="radio" name="radioMul" id="radio3" value="option 3"> <br>
+
+                    <!-- value here to set Submit as text for the button -->
+                    <input type="submit" value="Submit">
+                </form>
+        </div>
+
+        <div class="container">
+            <h1 class="heading">Input Elements</h1>
+            <!-- input elements -->
+                <form>
+                    <!-- autofocus - element focused on page load -->
+                    <!-- required - field must be filled before submitting -->
+                    <!-- minlength - min number of char in <input> or <textarea> -->
+                    <!-- maxlength - max number of char in <input> or <textarea> -->
+                    <label for="text">Text: </label>
+                    <input type="text" required minlength="2" maxlength="8" name="text"><br>
+                    <!-- placeholder - text that describes expected value -->
+                    <label for="password">Password: </label>
+                    <input type="password" placeholder="Password" name="password"><br>
+                    <label for="checkbox">Checkbox: </label>
+                    <input type="checkbox" name="checkbox"><br>
+                    <!-- readonly - field cannot be modified -->
+                    <label for="radio">Radio: </label>
+                    <input type="radio" readonly name="radio"><br>
+                    <!-- disabled - field un-usable & un-clickable -->
+                    <label for="file">File: </label>
+                    <input type="file" disabled name="file"><br>
+                    <label for="hidden">Hidden: </label>
+                    <input type="hidden" name="hidden"><br>
+                    <label for="submit">Submit: </label>
+                    <input type="submit" name="submit"><br>
+                    <label for="reset">Reset: </label>
+                    <input type="reset" name="reset"><br>
+                    <!-- value - set inital value -->
+                    <label for="number">Number: </label>
+                    <input type="number" value="1" name="number"><br>
+                    <label for="date">Date: </label>
+                    <input type="date" name="date"><br>
+                    <label for="time">Time: </label>
+                    <input type="time" name="time"><br>
+                    <label for="color">Color: </label>
+                    <input type="color" name="color"><br>
+                    <label for="range">Range: </label>
+                    <input type="range" name="range" min="0" max="10"><br>
+                    <label for="numberRan">Number Range: </label>
+                    <input type="number" name="numberRan" min="0" max="10" step="2"><br>
+                </form>
+        </div>
+
+        <div class="container">
+            <h1 class="heading">Audio & Video</h1>
+            <!-- audio & video -->
+                <!-- controls - add controls e.g. play, pause, volumn -->
+                <!-- source - specify alternative audio files -->
+                <audio controls>
+                    <!-- tries to play mp3 first then moves one to another if not supported -->
+                    <source src="res/audio.mp3" type="audio/mpeg">
+                    <source src="res/audio.ogg" type="audio/ogg">
+                    <!-- if none of the given is supported -->
+                    Your browser does not support the audio element.
+                </audio> <br>
+
+                <video width="200px" controls>
+                    <source src="res/movie.mp4" type="video/mp4">
+                    <source src="res/movie.ogg" type="video/ogg">
+                </video> <br>
+        </div>
+
+        <div class="container">
+            <h1 class="heading">Iframe</h1>
+            <!-- iframe -->
+                <!-- defines inline frame to embed another document within current document -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2091.474497277955!2d26.722181776657603!3d58.385398886217594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46eb37b2e8a6ef3d%3A0xb1c21ea409a3845f!2sDelta%20Centre%20-%20University%20of%20Tartu!5e0!3m2!1sde!2see!4v1734102850937!5m2!1sde!2see" width="200" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="container">
+            <h1 class="heading">User Input & Computer Code</h1>
+            <!-- user input & computer code -->
+                <!-- <kbd> - define a keyboard input -->
+                <p>press <kbd>Crtl+s</kbd> to save</p>
+                <!-- <samp> - define a sample output from computer program -->
+                <p>press <samp> F1 to continue</samp></p>
+                <!-- <code> - define a piece of computer code -->
+                <code>
+                    x = 5;
+                    y = 6;
+                    z = x + y;
+                </code>
+                <!-- <pre> - define preformatted text -->
+                <pre>
+                    <code>
+                        x = 5;
+                        y = 6;
+                        z = x + y;
+                    </code>
+                </pre>
+        </div>
+    </body>
+</html>
